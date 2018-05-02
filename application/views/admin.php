@@ -42,7 +42,7 @@
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin" method="POST" action='<?php echo base_url('welcome/masuk_admin')?>'>
                 <span id="reauth-email" class="reauth-email"></span>
-                <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+                <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
                 <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
             </form><!-- /form -->

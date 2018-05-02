@@ -10,6 +10,7 @@
 			<th scope="col">Merek</th>
 			<th scope="col">Harga</th>
 			<th scope="col">Stok</th>
+			<th scope="col">Edit</th>
 			<th scope="col">Delete</th>
 		</tr>
 	</thead>
@@ -21,8 +22,6 @@
 
 ?>
 
-
-
 		<tbody>
 		<tr class="table-info">
 			<th scope="row" class="p-4"><?php echo $row->NAMA_BARANG;?></th>
@@ -30,12 +29,13 @@
 			<td class="p-4"><?php echo $row->HARGA_BARANG;?></td>
 			<td class="p-4"><?php echo $row->STOK_BARANG;?></td>
 			<td>
+				<a href="#" class="btn btn-warning">Edit</a>
+			</td>
+			<td>
 				<a href="http://localhost:8080/TP3/welcome/deleton/<?php echo $row->ID_BARANG;?>" class="btn btn-danger">Delete</a>
 			</td>
 		</tr>
 		</tbody>
-
-
 
 <?php
 	}

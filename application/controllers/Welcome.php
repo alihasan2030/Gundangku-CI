@@ -44,12 +44,18 @@ class Welcome extends CI_Controller {
 
 	public function detail_log()
 	{
+		$this->all();
+	    $this->load->view('detail_log', $result);
+	}
+
+	public function all()
+	{
 		$email = $this->session->userdata('email');
 		$get = array('email' => $email);
 	    $result['req'] = $this->user->getreq()->result();
 	    $result['maman'] = $this->user->getid($get)->result();
 		$this->load->helper('url');
-	    $this->load->view('detail_log', $result);
+		$this->load->view('header', $result);	
 	}
 
 	public function masuk()
@@ -94,12 +100,8 @@ class Welcome extends CI_Controller {
 
 	public function show()
 	{
-		$email = $this->session->userdata('email');
-		$get = array('email' => $email);
-	    $result['req'] = $this->user->getreq()->result();
-	    $result['maman'] = $this->user->getid($get)->result();
-		$this->load->helper('url');
-	    $this->load->view('header', $result);
+		$this->all();
+
 		if (isset($_POST['submit1']))
 		{
 			$query = $this->db->query("SELECT * FROM barang");
@@ -148,7 +150,7 @@ class Welcome extends CI_Controller {
 	    $result['req'] = $this->user->getreq()->result();
 	    $result['maman'] = $this->user->getid($get)->result();
 		$this->load->helper('url');
-	    $this->load->view('header', $result);
+		$this->load->view('header', $result);
 	    $this->load->view('ad_login', $result);
 	}
 
@@ -159,10 +161,10 @@ class Welcome extends CI_Controller {
 	    $result['req'] = $this->user->getreq()->result();
 	    $result['maman'] = $this->user->getid($get)->result();
 		$this->load->helper('url');
+		$this->load->view('header', $result);	
 
 		$arg1 = $this->input->post('search');
 
-		$this->load->view('header', $result);
 		$query = $this->db->query("SELECT * FROM barang Where NAMA_BARANG LIKE '%".$arg1."%';");
 
 		$data['query'] = $query->result();
@@ -173,14 +175,36 @@ class Welcome extends CI_Controller {
 
 	public function deleton($id_barang)
 	{
-		$email = $this->session->userdata('email');
-		$get = array('email' => $email);
-	    $result['req'] = $this->user->getreq()->result();
-	    $result['maman'] = $this->user->getid($get)->result();
-		$this->load->helper('url');
-		$this->load->view('header', $result);
+		$this->all();
 
 		$query = $this->db->query("DELETE FROM barang WHERE ID_BARANG = '".$id_barang."';");
+		$query = $this->db->query("SELECT * FROM barang");
+		$data['query'] = $query->result();
+		$this->load->view('t_barang',$data);
+	}
+
+	public function deleton_detail($id_detail)
+	{
+		$this->all();
+
+		$query = $this->db->query("DELETE FROM detail_barang WHERE ID_DETAIL_BARANG = '".$id_detail."';");
+		$query = $this->db->query("SELECT * FROM detail_barang");
+		$data['query'] = $query->result();
+		$this->load->view('t_detail',$data);
+	}
+
+	public function v_editon($id_barang)
+	{
+		$this->all();
+		$datum['id'] = $id_barang;
+		$this->load->view('v_editon');
+	}
+
+	public function editon()
+	{
+		$this->all();
+
+		$query = $this->db->query("UPDATE barang SET HARGA_BARANG = '".$harga."', STOK_BARANG = '".$stok."' WHERE ID_BARANG = '".$id_barang."';");
 		$query = $this->db->query("SELECT * FROM barang");
 		$data['query'] = $query->result();
 		$this->load->view('t_barang',$data);
