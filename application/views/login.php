@@ -28,7 +28,7 @@
             <a class="nav-link" href='<?php echo base_url('welcome/')?>'>Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"><?php foreach ($maman as $key) { echo $key->email; }?> </a>
+            <a class="nav-link"><?php echo $maman['0']->NAMA;?> </a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href='<?php echo base_url('welcome/keluar')?>'>Logout</a>
@@ -53,22 +53,14 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-        <!-- <?php 
-        foreach ($req as $perreq) 
-        {
-            echo $perreq->nama;
-            echo "<br>";
-        }
-         ?> --> 
-
         <?php foreach ($req as $key) {?> 
         <a href='<?php echo base_url('welcome/detail_log')?>'>
           <div class="media">
             <div class="fav-box"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
-              <img class="d-flex align-self-start" src='<?php echo $key->gambar; ?>' alt="Generic placeholder image">
+              <img class="d-flex align-self-start" src='<?php echo $key->IMAGE; ?>' alt="Generic placeholder image">
               <div class="media-body pl-3">
-                <div class="price"><?php echo $key->harga; ?><small><?php echo $key->nama; ?></small></div>
-              <div class="address"><?php echo $key->deskripsi; ?></div>
+                <div class="price"><?php echo $key->NAMA_BARANG; ?><small><?php echo $key->MERK_BARANG; ?></small></div>
+              <div class="address" style="color: red"><b>Harga: </b><?php echo $key->HARGA_BARANG; ?></div>
             </div>
           </div>          
         </a>
