@@ -94,9 +94,14 @@ class Welcome extends CI_Controller {
 
 	public function show()
 	{
+		$email = $this->session->userdata('email');
+		$get = array('email' => $email);
+	    $result['req'] = $this->user->getreq()->result();
+	    $result['maman'] = $this->user->getid($get)->result();
+		$this->load->helper('url');
+	    $this->load->view('header', $result);
 		if (isset($_POST['submit1']))
 		{
-			$this->load->view('admin');
 			$query = $this->db->query("SELECT * FROM barang");
 			$data['query'] = $query->result();
 			$this->load->view('t_barang',$data);
@@ -104,7 +109,6 @@ class Welcome extends CI_Controller {
 		}
 		else if (isset($_POST['submit2']))
 		{
-			$this->load->view('admin');
 			$query = $this->db->query("SELECT * FROM detail_barang");
 			$data['query'] = $query->result();
 			$this->load->view('t_detail',$data);
@@ -165,5 +169,20 @@ class Welcome extends CI_Controller {
 
 		$this->load->view('login', $data, $result);
 		// $this->load->view('footer');
+	}
+
+	public function deleton($id_barang)
+	{
+		$email = $this->session->userdata('email');
+		$get = array('email' => $email);
+	    $result['req'] = $this->user->getreq()->result();
+	    $result['maman'] = $this->user->getid($get)->result();
+		$this->load->helper('url');
+		$this->load->view('header', $result);
+
+		$query = $this->db->query("DELETE FROM barang WHERE ID_BARANG = '".$id_barang."';");
+		$query = $this->db->query("SELECT * FROM barang");
+		$data['query'] = $query->result();
+		$this->load->view('t_barang',$data);
 	}
 }
