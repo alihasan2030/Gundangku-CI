@@ -35,20 +35,20 @@
     -->
     <div class="container">
         <div class="card card-container">
-            <h2 class="forgot-password" style="text-align: center;">Login Admin</h2>
+            <h2 class="forgot-password" style="text-align: center;">Masuk</h2>
             <br>
             <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form class="form-signin" method="POST" action='<?php echo base_url('welcome/masuk_admin')?>'>
+            <form class="form-signin" method="POST" action='<?php echo base_url('welcome/masuk')?>'>
                 <span id="reauth-email" class="reauth-email"></span>
-                <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
                 <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Masuk</button>
             </form><!-- /form -->
-            <a href='<?php echo base_url('welcome/')?>' class="forgot-password">
+            <!-- <a href='<?php echo base_url('welcome/')?>' class="forgot-password">
                 Login sebagai User
-            </a>
+            </a> -->
         </div><!-- /card-container -->
     </div><!-- /container -->
 </body>

@@ -21,13 +21,25 @@ class Welcome extends CI_Controller {
 	function __construct($foo = null)
 	{
 		parent::__construct();
-		$this->load->model('user');
+		$this->API = "http://857fc5cb.ngrok.io/api/Parts";
+		$this->load->library('curl');
+		$this->options = array(
+	        CURLOPT_RETURNTRANSFER => true,   // return web page
+	        CURLOPT_HEADER         => false,  // don't return headers
+	        CURLOPT_FOLLOWLOCATION => true,   // follow redirects
+	        CURLOPT_MAXREDIRS      => 10,     // stop after 10 redirects
+	        CURLOPT_ENCODING       => "",     // handle compressed
+	        CURLOPT_USERAGENT      => "test", // name of client
+	        CURLOPT_AUTOREFERER    => true,   // set referrer on redirect
+	        CURLOPT_CONNECTTIMEOUT => 120,    // time-out on connect
+	        CURLOPT_TIMEOUT        => 120,    // time-out on response
+	    ); 
 	}
 
 	public function index()
 	{
 		$this->load->helper('url');
-		$this->load->view('welcome_message');
+		$this->load->view('admin');
 	}
 
 	public function admin()
@@ -60,22 +72,29 @@ class Welcome extends CI_Controller {
 
 	public function masuk()
 	{
-		$email = $this->input->post('email');
+
+		$login = $this->input->post('email');
 		$password = $this->input->post('password');
-		$where = array('email' => $email, 'password' => $password);
+		$url = 'http://857fc5cb.ngrok.io/api/auth/token';
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,$url);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		$headers = array(
+		    'Content-Type:application/json',
+		    'Authorization: Basic '. base64_encode($login.":".$password) // <---
+		);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, base64_encode($login.":".$password)); 
+		curl_setopt_array($ch, $this->options);
+		$result = curl_exec($ch);
+		curl_close($ch);
 
-		$cek = $this->user->cek_user("pengguna",$where)->num_rows();
-		if ($cek > 0) {
-			$data_session = array(
-				'email' => $email,
-				'status' => "login");
+		$data_session = array(
+				'token' => $result
+		);
 
-			$this->session->set_userdata($data_session);
-
-			redirect(base_url('welcome/search'));
-		}else{
-			redirect(base_url('welcome/'));
-		}
+		$this->session->set_userdata($data_session);
+		redirect(base_url('welcome/search'));
 	}
 
 	public function masuk_admin()
@@ -156,21 +175,18 @@ class Welcome extends CI_Controller {
 
 	public function search()
 	{
-		$email = $this->session->userdata('email');
-		$get = array('email' => $email);
-	    $result['req'] = $this->user->getreq()->result();
-	    $result['maman'] = $this->user->getid($get)->result();
-		$this->load->helper('url');
-		$this->load->view('header', $result);	
+		$curl = curl_init($this->API."/GetAllBarang");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+		    'Content-Type: application/json',
+    		'Authorization: Bearer '. $this->session->userdata("token")
+    		)
+		);
+		curl_setopt_array($curl, $this->options);
 
-		$arg1 = $this->input->post('search');
+		$data['barang'] =  json_decode(curl_exec($curl));
 
-		$query = $this->db->query("SELECT * FROM barang Where NAMA_BARANG LIKE '%".$arg1."%';");
-
-		$data['query'] = $query->result();
-
-		$this->load->view('login', $data, $result);
-		// $this->load->view('footer');
+		$this->load->view('header');
+		$this->load->view('login', $data);
 	}
 
 	public function deleton($id_barang)
@@ -208,5 +224,165 @@ class Welcome extends CI_Controller {
 		$query = $this->db->query("SELECT * FROM barang");
 		$data['query'] = $query->result();
 		$this->load->view('t_barang',$data);
+	}
+
+	public function tambah(){
+
+		$curl = curl_init($this->API."/GetAllKategori");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+		    'Content-Type: application/json',
+    		'Authorization: Bearer '. $this->session->userdata("token")
+    		)
+		);
+		curl_setopt_array($curl, $this->options);
+
+		$data['kategori'] =  json_decode(curl_exec($curl));
+		$data['hasil'] =  "0";
+
+		$this->load->view('header');
+		$this->load->view('tambah_data', $data);
+
+	}
+
+	public function update(){
+
+		$curl = curl_init($this->API."/GetAllKategori");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+		    'Content-Type: application/json',
+    		'Authorization: Bearer '. $this->session->userdata("token")
+    		)
+		);
+		curl_setopt_array($curl, $this->options);
+
+		$data['kategori'] =  json_decode(curl_exec($curl));
+		$data['hasil'] =  "0";
+
+		$this->load->view('header');
+		$this->load->view('update_data', $data);
+
+	}
+
+	public function insertBarang() {
+
+		$id_brg = $this->input->post('id');
+
+		$data['Id_barang'] = $this->input->post('id');
+		$data['Xid_kategori'] = $this->input->post('kategori');
+		$data['Xid_pengguna'] = 1;
+		$data['Nama_barang'] = $this->input->post('nama');
+		$data['Merk_barang'] = $this->input->post('merk');
+		$data['Harga_barang'] = $this->input->post('harga');
+		$data['Stok_barang'] = $this->input->post('stok');
+		$data['Image_barang'] = $this->input->post('link');
+
+		$data2['Id_detail_barang'] = "null";
+		$data2['Id_barang'] = $this->input->post('id');
+		$data2['Nomor_seri_detail'] = $this->input->post('seri');
+		$data2['Status_detail'] = $this->input->post('status');
+		$data2['Keterangan_detail'] = $this->input->post('ket');
+
+		$data3['Id_spesifikasi'] = "null";
+		$data3['Xid_barang'] = $this->input->post('id');
+		$data3['Rincian_spesifikasi'] = $this->input->post('spek');
+
+		$insert = json_encode($data);
+
+		$curl = curl_init($this->API."/InsertBarang");
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+		    'Content-Type: application/json',
+    		'Content-Length: ' . strlen($insert),
+    		'Authorization: Bearer '. $this->session->userdata("token")
+    		)
+		);
+
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    	curl_setopt($curl, CURLOPT_POSTFIELDS, $insert); 
+
+    	$result = curl_exec($curl);
+     	curl_close($curl);
+
+		$dt = $result;
+		$datanya['hasilBarang'] =  json_decode($dt);
+
+
+
+		$insert2 = json_encode($data2);
+
+		$curl2 = curl_init($this->API."/InsertDetailBarang");
+		curl_setopt($curl2, CURLOPT_CUSTOMREQUEST, "POST");
+
+		curl_setopt($curl2, CURLOPT_HTTPHEADER, array(
+		    'Content-Type: application/json',
+    		'Content-Length: ' . strlen($insert2),
+    		'Authorization: Bearer ' . $this->session->userdata("token")
+    		)
+		);
+
+		curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
+    	curl_setopt($curl2, CURLOPT_POSTFIELDS, $insert2); 
+
+    	$result2 = curl_exec($curl2);
+     	curl_close($curl2);
+
+		$dt2 = $result2;
+		$datanya['hasilDetail'] =  $insert2;
+
+
+
+		$insert3 = json_encode($data3);
+
+		$curl3 = curl_init($this->API."/InsertSpesifikasi");
+		curl_setopt($curl3, CURLOPT_CUSTOMREQUEST, "POST");
+
+		curl_setopt($curl3, CURLOPT_HTTPHEADER, array(
+		    'Content-Type: application/json',
+    		'Content-Length: ' . strlen($insert3),
+    		'Authorization: Bearer '. $this->session->userdata("token")
+    		)
+		);
+
+		curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
+    	curl_setopt($curl3, CURLOPT_POSTFIELDS, $insert3); 
+
+    	$result3 = curl_exec($curl3);
+     	curl_close($curl3);
+
+		$dt3 = $result3;
+		$datanya['hasilSpek'] =  $insert3;
+
+
+
+		$this->load->view('header');
+		$this->load->view('konfirm_tambah_data', $datanya);
+
+    	/*echo $result;*/
+
+		/*$data['kategori'] = json_decode($this->curl->simple_get($this->API."/GetAllKategori"));
+		$this->load->view('tambah_barang', $data);*/
+		/*redirect(base_url('welcome/search'));*/
+		
+	}
+
+	public function deleteBarang($id) {
+
+		$url = $this->API."/DeleteBarang/".$id;
+	    $ch = curl_init();
+	    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		    'Content-Type: application/json',
+    		'Authorization: Bearer '. $this->session->userdata("token")
+    		)
+		);
+	    curl_setopt($ch, CURLOPT_URL, $url);
+	    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+	    $result = curl_exec($ch);
+	    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	    curl_close($ch);
+
+	    echo $result;
+
+    	redirect(base_url('welcome/search'));
+		
 	}
 }
