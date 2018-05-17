@@ -22,7 +22,7 @@
       </button>
       <a class="navbar-brand" href="#">GudangKompi</a>
 
-      <!-- <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link" href='<?php echo base_url('welcome/')?>'>Home</a>
@@ -34,5 +34,5 @@
             <a class="nav-link" href='<?php echo base_url('welcome/keluar')?>'>Logout</a>
           </li>
         </ul>
-      </div> -->
+      </div>
     </nav>
