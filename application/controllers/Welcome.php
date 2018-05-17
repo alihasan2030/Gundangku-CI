@@ -24,22 +24,21 @@ class Welcome extends CI_Controller {
 		$this->API = "http://857fc5cb.ngrok.io/api/Parts";
 		$this->load->library('curl');
 		$this->options = array(
-	        CURLOPT_RETURNTRANSFER => true,   // return web page
-	        CURLOPT_HEADER         => false,  // don't return headers
-	        CURLOPT_FOLLOWLOCATION => true,   // follow redirects
-	        CURLOPT_MAXREDIRS      => 10,     // stop after 10 redirects
-	        CURLOPT_ENCODING       => "",     // handle compressed
-	        CURLOPT_USERAGENT      => "test", // name of client
-	        CURLOPT_AUTOREFERER    => true,   // set referrer on redirect
-	        CURLOPT_CONNECTTIMEOUT => 120,    // time-out on connect
-	        CURLOPT_TIMEOUT        => 120,    // time-out on response
-	    ); 
+			CURLOPT_RETURNTRANSFER => true,   // return web page
+			CURLOPT_HEADER         => false,  // don't return headers
+			CURLOPT_FOLLOWLOCATION => true,   // follow redirects
+			CURLOPT_MAXREDIRS      => 10,     // stop after 10 redirects
+			CURLOPT_ENCODING       => "",     // handle compressed
+			CURLOPT_USERAGENT      => "test", // name of client
+			CURLOPT_AUTOREFERER    => true,   // set referrer on redirect
+			CURLOPT_CONNECTTIMEOUT => 120,    // time-out on connect
+			CURLOPT_TIMEOUT        => 120,    // time-out on response
+		); 
 	}
 
 	public function index()
 	{
-		$this->load->helper('url');
-		$this->load->view('admin');
+		redirect(base_url('/welcome/admin'));
 	}
 
 	public function admin()
@@ -51,21 +50,21 @@ class Welcome extends CI_Controller {
 	public function detail()
 	{
 		$this->load->helper('url');
-	    $this->load->view('detail');
+		$this->load->view('detail');
 	}
 
 	public function detail_log()
 	{
 		$this->all();
-	    $this->load->view('detail_log', $result);
+		$this->load->view('detail_log', $result);
 	}
 
 	public function all()
 	{
 		$email = $this->session->userdata('email');
 		$get = array('email' => $email);
-	    $result['req'] = $this->user->getreq()->result();
-	    $result['maman'] = $this->user->getid($get)->result();
+		$result['req'] = $this->user->getreq()->result();
+		$result['maman'] = $this->user->getid($get)->result();
 		$this->load->helper('url');
 		$this->load->view('header', $result);	
 	}
@@ -80,9 +79,9 @@ class Welcome extends CI_Controller {
 		curl_setopt($ch, CURLOPT_URL,$url);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 		$headers = array(
-		    'Content-Type:application/json',
-		    'Authorization: Basic '. base64_encode($login.":".$password) // <---
-		);
+			'Content-Type:application/json',
+				'Authorization: Basic '. base64_encode($login.":".$password) // <---
+			);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, base64_encode($login.":".$password)); 
 		curl_setopt_array($ch, $this->options);
@@ -90,7 +89,7 @@ class Welcome extends CI_Controller {
 		curl_close($ch);
 
 		$data_session = array(
-				'token' => $result
+			'token' => $result
 		);
 
 		$this->session->set_userdata($data_session);
@@ -145,14 +144,14 @@ class Welcome extends CI_Controller {
 
 	public function result()
 	{
-	    $result['req'] = $this->user->getreq()->result();
+		$result['req'] = $this->user->getreq()->result();
 		$this->load->helper('url');
-	    $this->load->view('result', $result);
+		$this->load->view('result', $result);
 	}
 
 	// public function login()
 	// {
-		
+	
 	// 	$email = $this->session->userdata('email');
 	// 	$get = array('email' => $email);
 	//     $result['req'] = $this->user->getreq()->result();
@@ -166,21 +165,21 @@ class Welcome extends CI_Controller {
 	{
 		$email = $this->session->userdata('email');
 		$get = array('email' => $email);
-	    $result['req'] = $this->user->getreq()->result();
-	    $result['maman'] = $this->user->getid($get)->result();
+		$result['req'] = $this->user->getreq()->result();
+		$result['maman'] = $this->user->getid($get)->result();
 		$this->load->helper('url');
 		$this->load->view('header', $result);
-	    $this->load->view('ad_login', $result);
+		$this->load->view('ad_login', $result);
 	}
 
 	public function search()
 	{
 		$curl = curl_init($this->API."/GetAllBarang");
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-		    'Content-Type: application/json',
-    		'Authorization: Bearer '. $this->session->userdata("token")
-    		)
-		);
+			'Content-Type: application/json',
+			'Authorization: Bearer '. $this->session->userdata("token")
+		)
+	);
 		curl_setopt_array($curl, $this->options);
 
 		$data['barang'] =  json_decode(curl_exec($curl));
@@ -230,10 +229,10 @@ class Welcome extends CI_Controller {
 
 		$curl = curl_init($this->API."/GetAllKategori");
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-		    'Content-Type: application/json',
-    		'Authorization: Bearer '. $this->session->userdata("token")
-    		)
-		);
+			'Content-Type: application/json',
+			'Authorization: Bearer '. $this->session->userdata("token")
+		)
+	);
 		curl_setopt_array($curl, $this->options);
 
 		$data['kategori'] =  json_decode(curl_exec($curl));
@@ -248,10 +247,10 @@ class Welcome extends CI_Controller {
 
 		$curl = curl_init($this->API."/GetAllKategori");
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-		    'Content-Type: application/json',
-    		'Authorization: Bearer '. $this->session->userdata("token")
-    		)
-		);
+			'Content-Type: application/json',
+			'Authorization: Bearer '. $this->session->userdata("token")
+		)
+	);
 		curl_setopt_array($curl, $this->options);
 
 		$data['kategori'] =  json_decode(curl_exec($curl));
@@ -291,17 +290,17 @@ class Welcome extends CI_Controller {
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-		    'Content-Type: application/json',
-    		'Content-Length: ' . strlen($insert),
-    		'Authorization: Bearer '. $this->session->userdata("token")
-    		)
-		);
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen($insert),
+			'Authorization: Bearer '. $this->session->userdata("token")
+		)
+	);
 
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    	curl_setopt($curl, CURLOPT_POSTFIELDS, $insert); 
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $insert); 
 
-    	$result = curl_exec($curl);
-     	curl_close($curl);
+		$result = curl_exec($curl);
+		curl_close($curl);
 
 		$dt = $result;
 		$datanya['hasilBarang'] =  json_decode($dt);
@@ -314,17 +313,17 @@ class Welcome extends CI_Controller {
 		curl_setopt($curl2, CURLOPT_CUSTOMREQUEST, "POST");
 
 		curl_setopt($curl2, CURLOPT_HTTPHEADER, array(
-		    'Content-Type: application/json',
-    		'Content-Length: ' . strlen($insert2),
-    		'Authorization: Bearer ' . $this->session->userdata("token")
-    		)
-		);
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen($insert2),
+			'Authorization: Bearer ' . $this->session->userdata("token")
+		)
+	);
 
 		curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
-    	curl_setopt($curl2, CURLOPT_POSTFIELDS, $insert2); 
+		curl_setopt($curl2, CURLOPT_POSTFIELDS, $insert2); 
 
-    	$result2 = curl_exec($curl2);
-     	curl_close($curl2);
+		$result2 = curl_exec($curl2);
+		curl_close($curl2);
 
 		$dt2 = $result2;
 		$datanya['hasilDetail'] =  $insert2;
@@ -337,17 +336,17 @@ class Welcome extends CI_Controller {
 		curl_setopt($curl3, CURLOPT_CUSTOMREQUEST, "POST");
 
 		curl_setopt($curl3, CURLOPT_HTTPHEADER, array(
-		    'Content-Type: application/json',
-    		'Content-Length: ' . strlen($insert3),
-    		'Authorization: Bearer '. $this->session->userdata("token")
-    		)
-		);
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen($insert3),
+			'Authorization: Bearer '. $this->session->userdata("token")
+		)
+	);
 
 		curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
-    	curl_setopt($curl3, CURLOPT_POSTFIELDS, $insert3); 
+		curl_setopt($curl3, CURLOPT_POSTFIELDS, $insert3); 
 
-    	$result3 = curl_exec($curl3);
-     	curl_close($curl3);
+		$result3 = curl_exec($curl3);
+		curl_close($curl3);
 
 		$dt3 = $result3;
 		$datanya['hasilSpek'] =  $insert3;
@@ -357,7 +356,7 @@ class Welcome extends CI_Controller {
 		$this->load->view('header');
 		$this->load->view('konfirm_tambah_data', $datanya);
 
-    	/*echo $result;*/
+		/*echo $result;*/
 
 		/*$data['kategori'] = json_decode($this->curl->simple_get($this->API."/GetAllKategori"));
 		$this->load->view('tambah_barang', $data);*/
@@ -368,21 +367,21 @@ class Welcome extends CI_Controller {
 	public function deleteBarang($id) {
 
 		$url = $this->API."/DeleteBarang/".$id;
-	    $ch = curl_init();
-	    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-		    'Content-Type: application/json',
-    		'Authorization: Bearer '. $this->session->userdata("token")
-    		)
-		);
-	    curl_setopt($ch, CURLOPT_URL, $url);
-	    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-	    $result = curl_exec($ch);
-	    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	    curl_close($ch);
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+			'Authorization: Bearer '. $this->session->userdata("token")
+		)
+	);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+		$result = curl_exec($ch);
+		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
 
-	    echo $result;
+		echo $result;
 
-    	redirect(base_url('welcome/search'));
+		redirect(base_url('welcome/search'));
 		
 	}
 }
