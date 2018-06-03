@@ -5,11 +5,7 @@
     <div class="col-md-10 offset-1">
       <div class="jumbotron">
         
-        <?php if ($hasil != "0"){ ?>
-          <label class="col-md-5 offset-1 control-label"><?php echo $hasil; ?></label>
-        <?php } ?>
-
-        <form method="post" action="<?php echo site_url('parts/updateBarang'); ?>">
+        <form method="post" action="<?php echo site_url('parts/proses_update_barang'); ?>">
 
           <div class="row">
             <label class="col-md-5 offset-1 control-label">ID Barang</label>
@@ -63,37 +59,6 @@
           </div>
           <br>
 
-          <?php $i = 0; foreach ($detail_barang as $rows) { ?>
-            <input type="hidden" name="id_detail_<?php echo $i; ?>" value="<?php echo $rows->id_detail_barang; ?>">
-
-            <div class="row">
-              <label class="col-md-5 offset-1 control-label">Nomor Seri</label>
-              &nbsp;
-              <label class="col-md-5 control-label">Status</label>
-            </div>
-            <div class="row">
-              <input type="text" name="seri_<?php echo $i; ?>" class="form-control col-md-5 offset-1" value="<?php echo $rows->nomor_seri_detail ?>" required>
-              &nbsp;
-              <select class="custom-control custom-select col-md-5" name="status_<?php echo $i; ?>" required>
-                <option value="<?php echo $rows->status_detail ?>" selected><?php echo $rows->status_detail ?></option>
-                <option value="READY">READY</option>
-                <option value="PENDING">PENDING</option>
-                <option value="DEFACED">DEFACED</option>
-                <option value="RESERVED">RESERVED</option>
-              </select>
-            </div>
-            <br>
-          
-            <div class="row">
-              <label class="col-md-5 offset-1 control-label">Keterangan</label>
-            </div>
-            <div class="row">
-              <input type="text" name="ket_<?php echo $i; ?>" class="form-control col-md-10 offset-1" value="<?php echo $rows->keterangan_detail ?>" required>
-            </div>
-            <br>
-          <?php $i++; } ?>
-
-          <input type="hidden" name="byk" value="<?php echo $i; ?>">
           <input type="hidden" name="id_spek" value="<?php echo $spesifikasi->id_spesifikasi; ?>">
 
           <div class="row">

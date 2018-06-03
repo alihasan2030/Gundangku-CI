@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <?php foreach ($barang as $row) {?> 
 
-        <a href='<?php echo site_url('parts/detailBarang/'.$row->id_barang)?>'>
+        <a href='<?php echo site_url('parts/detail_barang/'.$row->id_barang)?>'>
           <div class="media" style="padding-bottom: 10px;">
             <div class="fav-box"><i class="fa fa-heart-o" aria-hidden="true"></i>
             </div>
