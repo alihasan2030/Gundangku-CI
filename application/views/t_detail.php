@@ -32,7 +32,7 @@
 				<a href="#" class="btn btn-warning">Edit</a>
 			</td>
 			<td>
-				<a href="http://localhost:8080/TP3/welcome/deleton_detail/<?php echo $row->ID_DETAIL_BARANG;?>" class="btn btn-danger">Delete</a>
+				<a href="http://localhost:8080/TP3/parts/deleton_detail/<?php echo $row->ID_DETAIL_BARANG;?>" class="btn btn-danger">Delete</a>
 			</td>
 		</tr>
 		</tbody>

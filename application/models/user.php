@@ -1,26 +1,22 @@
-<?php 
-/**
-* 
-*/
+<?php
+
 class User extends CI_Model
 {
-	function cek_user($table,$where)
-	{
-		return $this->db->get_where($table,$where);
-	}
-
-	public function getreq()
-	{
-	    return $this->db->get('barang');
-	}
-
-	public function getid($where)
-	{
-	    return $this->db->get_where('pengguna', $where);
-	}
-	// function tambah_user($data)
-	// {
-	// 	return $this->db->insert("user",$data);
-	// }
+    function check_login($username, $password) {
+        $url = 'http://localhost:5000/api/auth/token';
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,$url);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		$headers = array(
+			'Content-Type:application/json',
+			'Authorization: Basic '. base64_encode($username.":".$password)
+		);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, base64_encode($username.":".$password));
+		curl_setopt_array($ch, $this->globals->options);
+		$result = curl_exec($ch);
+        curl_close($ch);
+        
+        return $result;
+    }
 }
- ?>

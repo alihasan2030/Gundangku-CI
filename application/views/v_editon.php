@@ -1,6 +1,6 @@
 	
 
-	<?php echo form_open_multipart('http://localhost:8080/TP3/welcome/editon');?>	
+	<?php echo form_open_multipart('http://localhost:8080/TP3/parts/editon');?>	
 		<div class="container">
 			<div class="row justify-content-center p-2">
 				<div class="col-6 text-center">

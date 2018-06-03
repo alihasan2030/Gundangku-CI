@@ -29,13 +29,13 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href='<?php echo base_url('welcome/')?>'>Home</a>
+            <a class="nav-link" href='<?php echo base_url('parts/')?>'>Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href='<?php echo base_url('welcome/admin')?>'>Admin</a>
+            <a class="nav-link" href='<?php echo base_url('parts/admin')?>'>Admin</a>
           </li>
         </ul>
-        <form class="form-inline my-2 my-md-0" action='<?php echo base_url('welcome/result')?>'>
+        <form class="form-inline my-2 my-md-0" action='<?php echo base_url('parts/result')?>'>
           <input class="form-control mr-sm-2" type="text" placeholder="Cari Properti">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>  
         </form>

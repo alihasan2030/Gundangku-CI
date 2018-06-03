@@ -25,13 +25,10 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href='<?php echo base_url('welcome/')?>'>Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"><?php echo $maman['0']->NAMA;?> </a>
+            <a class="nav-link" href='<?php echo base_url('parts/')?>'>Home</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href='<?php echo base_url('welcome/keluar')?>'>Logout</a>
+            <a class="nav-link" href='<?php echo base_url('parts/keluar')?>'>Logout</a>
           </li>
         </ul>
       </div>
