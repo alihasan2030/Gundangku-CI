@@ -122,8 +122,13 @@ class Parts extends CI_Controller {
 	}
 
 	function update_detail($id_barang){
+<<<<<<< HEAD
 		$data['detail'] = $this->detailbarang->get_id($id_barang);
 		// $data['barang'] =  $this->barang->get($id_barang);
+=======
+		$data['detail'] = $this->detailbarang->get($id_barang);
+		$data['barang'] =  $this->barang->get($id_barang);
+>>>>>>> 820239f04db15ed8f2a14415dfa65b123bda763b
 		
 		$this->load->view('header');
 		$this->load->view('update_detail', $data);	
