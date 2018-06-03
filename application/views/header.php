@@ -1,7 +1,6 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel="stylesheet" type="text/css" href="css/style2.css">
 <link href="https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel = "stylesheet" type = "text/css" href = "<?php echo base_url(); ?>css/style2.css">
+<link rel = "stylesheet" type = "text/css" href = "<?php echo base_url(); ?>css/templatemo_style.css">
 
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

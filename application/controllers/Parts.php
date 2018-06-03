@@ -75,13 +75,38 @@ class Parts extends CI_Controller {
 			redirect(site_url());
 		}
 	}
+
+	function tambah_detail($id_barang) {
+		if($this->session->userdata('token')) {
+			$data['barang'] = $this->barang->get($id_barang);
+			$data['kategori'] = $this->detailbarang->get($id_barang);
+			
+			$this->load->view('header');
+			$this->load->view('tambah_detail', $data);
+		} else {
+			redirect(site_url());
+		}
+	}
 	
 	function detail_barang($id_barang) {
 		if($this->session->userdata('token')) {
-			$data['result'] =  $this->detailbarang->get($id_barang);
+			$data['result'] =  $this->barang->get($id_barang);
+			$data['spesifikasi'] =  $this->spesifikasi->get($id_barang);
 			
 			$this->load->view('header');
 			$this->load->view('v_detail', $data);
+		} else {
+			redirect(site_url());
+		}
+	}
+
+	function detail_crud($id_barang) {
+		if($this->session->userdata('token')) {
+			$data['detail'] =  $this->detailbarang->get($id_barang);
+			$data['barang'] =  $this->barang->get($id_barang);
+			
+			$this->load->view('header');
+			$this->load->view('t_detail', $data);
 		} else {
 			redirect(site_url());
 		}
@@ -94,6 +119,14 @@ class Parts extends CI_Controller {
 		
 		$this->load->view('header');
 		$this->load->view('update_data', $data);	
+	}
+
+	function update_detail($id_barang){
+		$data['detail'] = $this->detailbarang->get_id($id_barang);
+		// $data['barang'] =  $this->barang->get($id_barang);
+		
+		$this->load->view('header');
+		$this->load->view('update_detail', $data);	
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
