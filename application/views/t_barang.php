@@ -1,5 +1,9 @@
 <br>
+<a href="http://localhost:8080/TP3/welcome/ad_login" class="container">
+	<a href="http://localhost:8080/TP3/welcome/ad_login" class="btn btn-success">Back</a>
+</a>
 <h1 class="container" style="text-align: center; color: white">Daftar Barang</h1>
+
 <br>
 <div class="container">
 
