@@ -1,4 +1,19 @@
-<!--     <meta name="viewport" content="width=device-width">
+ <!DOCTYPE html>
+ <html>
+ <head>
+     <title>Gudangku_SP</title>
+     <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+    <title>Sprint Bootstrap Website Design</title>
+    <meta name="description" content="">
+<!--
+
+Sprint Template
+
+http://www.templatemo.com/tm-401-sprint
+
+-->
+    <meta name="viewport" content="width=device-width">
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet">
 
@@ -7,7 +22,7 @@
     <link rel="stylesheet" href="<?php echo base_url('css/font-awesome.min.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('css/animate.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('css/templatemo_misc.css') ?>">
-    <link rel="stylesheet" href="<?php echo base_url('css/templatemo_style.css') ?>"> -->
+    <link rel="stylesheet" href="<?php echo base_url('css/templatemo_style.css') ?>">
 
  </head>
  <body background="../images/bg.png">
@@ -18,8 +33,7 @@
                     <h1 class="section-title">Products</h1>
                 </div> <!-- /.col-md-12 -->
             </div> <!-- /.row -->
-            <a href="<?php echo base_url('parts/tambah') ?>"><button class="btn btn-success">Add New Product</button>
-                <br><br>
+
             <div class="row">
 
                 <?php foreach ($barang as $row) {?> 
@@ -29,7 +43,7 @@
                             <div class="overlay">
                                 <div class="overlay-inner">
                                     <?php $id = $row->id_barang ?>
-                                    <a href='<?php echo base_url('parts/detail_barang/').$id?>' class="view-detail">Detail</a> <!-- click ke detail -->
+                                    <a href='<?php echo base_url('parts/detail/').$id?>' class="view-detail">Detail</a> <!-- click ke detail -->
                                 </div>
                             </div> <!-- /.overlay -->
                             <img style="object-fit: cover" width="230px" height="230px" src='<?php echo $row->image_barang; ?>' alt="">
