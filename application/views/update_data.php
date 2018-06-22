@@ -12,7 +12,9 @@
             <label class="col-md-5 control-label">Merk Barang</label>
           </div>
           <div class="row">
-            <input type="text" name="id" class="form-control col-md-5 offset-1" value="<?php echo $barang->nama_barang ?>" required>
+            <input type="hidden" name="id" class="form-control col-md-5 offset-1" value="<?php echo $barang->id_barang ?>" required>
+              <input type="hidden" name="stok" class="form-control col-md-5 offset-1" value="<?php echo $barang->stok_barang ?>" required>
+            <input type="text" name="nama" class="form-control col-md-5 offset-1" value="<?php echo $barang->nama_barang ?>" required>
             &nbsp;
             <select class="custom-control custom-select col-md-5" name="kategori" required>
               <?php foreach ($kategori as $row) : ?>
@@ -32,9 +34,9 @@
             <label class="col-md-5 control-label">Harga Barang</label>
           </div>
           <div class="row">
-            <input type="text" name="nama" class="form-control col-md-5 offset-1" value="<?php echo $barang->merk_barang ?>" required>
+            <input type="text" name="merk" class="form-control col-md-5 offset-1" value="<?php echo $barang->merk_barang ?>" required>
             &nbsp;
-            <input type="text" name="merk" class="form-control col-md-5" value="<?php echo $barang->harga_barang ?>" required>
+            <input type="text" name="harga" class="form-control col-md-5" value="<?php echo $barang->harga_barang ?>" required>
           </div>
           <br>
 

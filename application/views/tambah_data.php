@@ -5,8 +5,8 @@
       <a href="<?php echo base_url() .'parts/all'; ?>"><button type="button" class="btn btn-warning">Back</button></a>
       <br><br>
       <div class="jumbotron">
-        <form method="post" action="<?php echo site_url('parts/proses_insert_detail'); ?>">
-
+        <form method="post" action="<?php echo site_url('parts/proses_insert_barang'); ?>">
+            <input type="hidden" name="stok" class="form-control col-md-5 offset-1" value="0" required>
           <div>
             <label class="offset-1 control-label">ID Barang</label>
           </div>
