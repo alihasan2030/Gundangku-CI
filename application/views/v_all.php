@@ -1,40 +1,48 @@
-<br>
-<div class="container">
-  <a style="color: white;" href="<?php echo base_url() .'parts/tambah'; ?>">
-  <button type="button" class="btn btn-primary">Tambah Data</button>
-  </a>
-  <br>
-  <br>
-</div>
+<!--     <meta name="viewport" content="width=device-width">
 
-<div class="clearfix"></div>
-<div class="search-box">
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-        <?php foreach ($barang as $row) {?> 
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet">
 
-        <a href='<?php echo site_url('parts/detail_barang/'.$row->id_barang)?>'>
-          <div class="media" style="padding-bottom: 10px;">
-            <div class="fav-box"><i class="fa fa-heart-o" aria-hidden="true"></i>
-            </div>
-              <img class="d-flex align-self-start" src='<?php echo $row->image_barang; ?>' alt="Generic placeholder image">
-              <div class="media-body pl-4" style="border: 0px; padding-bottom: 10px;">
-                <div class="price"><?php echo $row->nama_barang; ?><small><?php echo $row->merk_barang; ?></small></div>
-              <div class="address" style="color: red"><b>Harga: </b><?php echo $row->harga_barang; ?></div>
-              <div class="address" style="color: black">
-                <a href="<?php echo site_url('parts/update/'.$row->id_barang); ?>"><span class="btn btn-outline-primary">Update</span></a>
-                <a href="<?php echo site_url('parts/deleteDetail/'.$row->id_barang); ?>"><span class="btn btn-outline-danger">Hapus</span></a>
-              </div>
-            </div>
-          </div>          
-        </a>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('css/normalize.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('css/font-awesome.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('css/animate.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('css/templatemo_misc.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('css/templatemo_style.css') ?>"> -->
 
-        <?php } ?>
-    </div>
-  </div>
-</div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
-</body>
-</html>
+ </head>
+ <body background="../images/bg.png">
+ <div id="products" class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 class="section-title">Products</h1>
+                </div> <!-- /.col-md-12 -->
+            </div> <!-- /.row -->
+            <a href="<?php echo base_url('parts/tambah') ?>"><button class="btn btn-success">Add New Product</button>
+                <br><br>
+            <div class="row">
+
+                <?php foreach ($barang as $row) {?> 
+                <div class="col-md-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="item-thumb">
+                            <div class="overlay">
+                                <div class="overlay-inner">
+                                    <?php $id = $row->id_barang ?>
+                                    <a href='<?php echo base_url('parts/detail_barang/').$id?>' class="view-detail">Detail</a> <!-- click ke detail -->
+                                </div>
+                            </div> <!-- /.overlay -->
+                            <img style="object-fit: cover" width="230px" height="230px" src='<?php echo $row->image_barang; ?>' alt="">
+                        </div> <!-- /.item-thumb -->
+                        <h3><?php echo $row->nama_barang; ?></h3>
+                        <span>Merek: <?php echo $row->merk_barang; ?></span><br>
+                        <span>Harga: <?php echo $row->harga_barang; ?></span><br>
+                        <span>Stok: <?php echo $row->stok_barang; ?></span><br>
+                    </div> <!-- /.product-item -->
+                </div> <!-- /.col-md-3 -->
+                <?php } ?>
+            </div> <!-- /.row -->
+        </div> <!-- /.container -->
+    </div> <!-- /#products -->
+ </body>
+ </html>

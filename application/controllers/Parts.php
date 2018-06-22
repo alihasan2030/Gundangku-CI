@@ -36,7 +36,6 @@ class Parts extends CI_Controller {
 		$password = $this->input->post('password');
 		
 		$result = $this->user->check_login($username, $password);
-		
 		if ($result) {
 			$data_session = array(
 				'username' => $login,
@@ -55,6 +54,7 @@ class Parts extends CI_Controller {
 	}
 	
 	function all() {
+		//print_r($this->session->userdata('token'));
 		if($this->session->userdata('token')) {
 			$data['barang'] =  $this->barang->get_all();
 			
@@ -75,13 +75,38 @@ class Parts extends CI_Controller {
 			redirect(site_url());
 		}
 	}
+
+	function tambah_detail($id_barang) {
+		if($this->session->userdata('token')) {
+			$data['barang'] = $this->barang->get($id_barang);
+			$data['kategori'] = $this->detailbarang->get($id_barang);
+			
+			$this->load->view('header');
+			$this->load->view('tambah_detail', $data);
+		} else {
+			redirect(site_url());
+		}
+	}
 	
 	function detail_barang($id_barang) {
 		if($this->session->userdata('token')) {
-			$data['result'] =  $this->detailbarang->get($id_barang);
+			$data['result'] =  $this->barang->get($id_barang);
+			$data['spesifikasi'] =  $this->spesifikasi->get($id_barang);
 			
 			$this->load->view('header');
 			$this->load->view('v_detail', $data);
+		} else {
+			redirect(site_url());
+		}
+	}
+
+	function detail_crud($id_barang) {
+		if($this->session->userdata('token')) {
+			$data['detail'] =  $this->detailbarang->get($id_barang);
+			$data['barang'] =  $this->barang->get($id_barang);
+			
+			$this->load->view('header');
+			$this->load->view('t_detail', $data);
 		} else {
 			redirect(site_url());
 		}
@@ -94,6 +119,14 @@ class Parts extends CI_Controller {
 		
 		$this->load->view('header');
 		$this->load->view('update_data', $data);	
+	}
+
+	function update_detail($id_barang){
+		$data['detail'] = $this->detailbarang->get_id($id_barang);
+		// $data['barang'] =  $this->barang->get($id_barang);
+		
+		$this->load->view('header');
+		$this->load->view('update_detail', $data);	
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +168,7 @@ class Parts extends CI_Controller {
 		// data barang
 		$data_barang['Id_barang'] = $this->input->post('id');
 		$data_barang['Xid_kategori'] = $this->input->post('kategori');
-		$data_barang['Xid_pengguna'] = 1;
+		$data_barang['Xid_pengguna'] = "1";
 		$data_barang['Nama_barang'] = $this->input->post('nama');
 		$data_barang['Merk_barang'] = $this->input->post('merk');
 		$data_barang['Harga_barang'] = $this->input->post('harga');
@@ -143,15 +176,15 @@ class Parts extends CI_Controller {
 		$data_barang['Image_barang'] = $this->input->post('link');
 		// put
 		$insert = json_encode($data_barang);
-		$curl = curl_init($this->globals->api."/InsertBarang");
-		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+		$curl = curl_init($this->globals->api."/UpdateBarang/".$data_barang['Id_barang']);
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
 			'Content-Type: application/json',
 			'Content-Length: ' . strlen($insert),
 			'Authorization: Bearer '. $this->session->userdata("token")
 			)
 		);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, false);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $insert);
 		$result = curl_exec($curl);
 		curl_close($curl);
@@ -161,7 +194,8 @@ class Parts extends CI_Controller {
 		$data_spesifikasi['Xid_barang'] = $this->input->post('id');
 		$data_spesifikasi['Rincian_spesifikasi'] = $this->input->post('spek');
 
-		redirect(site_url());		
+        //var_dump(json_decode($insert));
+		redirect(site_url());
 	}
 	
 	function insertDetailBarang() {
