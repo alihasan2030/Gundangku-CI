@@ -42,4 +42,21 @@ class Barang extends CI_Model
         
         return $result;
     }
+
+    function update($id, $data) {
+        $curl = curl_init($this->globals->api."/UpdateBarang/".$id);
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen($data),
+			'Authorization: Bearer '. $this->session->userdata("token")
+			)
+		);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+		$result = curl_exec($curl);
+        curl_close($curl);
+        
+        return $result;
+    }
 }

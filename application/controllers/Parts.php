@@ -197,6 +197,45 @@ class Parts extends CI_Controller {
         //var_dump(json_decode($insert));
 		redirect(site_url());
 	}
+
+	function proses_insert_detail() {
+		$data = [
+			'id_barang' => $this->input->post('id_product'),
+			'nomor_seri_detail' => $this->input->post('no_seri'),
+			'status_detail' => $this->input->post('status'),
+			'keterangan_detail' => $this->input->post('ket')
+		];
+		// post data to api
+		if($this->detailbarang->insert(json_encode($data))) {
+			echo 'Insert data barang sukses<br>';
+		} else {
+			echo 'Insert data barang gagal<br>';
+		}
+
+		sleep(3);
+		redirect(site_url());
+	}
+
+	function proses_update_detail() {
+		// data barang
+		$id = $this->input->post('id_detail');
+		$data = [
+			'id_detail_barang' => $id,
+			'id_barang' => $this->input->post('id_product'),
+			'nomor_seri_detail' => $this->input->post('no_seri'),
+			'status_detail' => $this->input->post('status'),
+			'keterangan_detail' => $this->input->post('ket')
+		];
+		// post data to api
+		if($this->detailbarang->update($id, json_encode($data))) {
+			echo 'Insert data barang sukses<br>';
+		} else {
+			echo 'Insert data barang gagal<br>';
+		}
+
+		sleep(3);
+		// redirect(site_url());
+	}
 	
 	function insertDetailBarang() {
 		
