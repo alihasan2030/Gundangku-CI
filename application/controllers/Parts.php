@@ -102,7 +102,8 @@ class Parts extends CI_Controller {
 
 	function proses_hapus_barang($id_barang) {
         if($this->session->userdata('token')) {
-
+        	$this->deleteDetail($id_barang);
+            redirect(site_url());
         } else {
             redirect(site_url());
         }
