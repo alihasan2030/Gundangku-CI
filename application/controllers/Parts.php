@@ -228,7 +228,17 @@ class Parts extends CI_Controller {
 		redirect(site_url());
 	}
 
-	function proses_insert_detail() {
+    function proses_hapus_barang($id_barang) {
+        if($this->session->userdata('token')) {
+            $this->spesifikasi->delete($id_barang);
+            $this->detailbarang->delete($id_barang);
+            $this->barang->delete($id_barang);
+        } else {
+            redirect(site_url());
+        }
+    }
+
+    function proses_insert_detail() {
 		$data = [
 			'id_barang' => $this->input->post('id_product'),
 			'nomor_seri_detail' => $this->input->post('no_seri'),
@@ -266,8 +276,16 @@ class Parts extends CI_Controller {
 		sleep(3);
 		// redirect(site_url());
 	}
-	
-	function insertDetailBarang() {
+
+    function proses_hapus_detail($id_barang) {
+        if($this->session->userdata('token')) {
+            $this->detailbarang->delete($id_barang);
+        } else {
+            redirect(site_url());
+        }
+    }
+
+    function insertDetailBarang() {
 		
 		$n = $this->input->post('stok');
 		
@@ -314,7 +332,7 @@ class Parts extends CI_Controller {
 		$result = curl_exec($ch);
 		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close($ch);
-		
+
 		$this->deleteSpesifikasi($id);
 	}
 	
