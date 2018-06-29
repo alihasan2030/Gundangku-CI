@@ -13,6 +13,18 @@ class Barang extends CI_Model
         
         return json_decode(curl_exec($curl));        
     }
+
+    function get_search($like) {
+        $curl = curl_init($this->globals->api."/SearchBarang/".$like);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Authorization: Bearer '. $this->session->userdata("token")
+            )
+        );
+        curl_setopt_array($curl, $this->globals->options);
+        
+        return json_decode(curl_exec($curl));        
+    }
     
     function get($id_barang) {
 		$curl = curl_init($this->globals->api."/GetBarangById/" . $id_barang);

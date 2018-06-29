@@ -54,17 +54,28 @@ class Parts extends CI_Controller {
 	}
 	
 	function all() {
-		//print_r($this->session->userdata('token'));
-		if($this->session->userdata('token')) {
-			$data['barang'] =  $this->barang->get_all();
-			
-			$this->load->view('header');
-			$this->load->view('v_all', $data);
-		} else {
-			redirect(site_url());
+		$like = $this->input->get('query');
+		if (isset($like)) {
+			if($this->session->userdata('token')) {
+				$data['barang'] =  $this->barang->get_search($like);
+				
+				$this->load->view('header');
+				$this->load->view('v_all', $data);
+			} else {
+				redirect(site_url());
+			}
+		}else{
+			if($this->session->userdata('token')) {
+				$data['barang'] =  $this->barang->get_all();
+				
+				$this->load->view('header');
+				$this->load->view('v_all', $data);
+			} else {
+				redirect(site_url());
+			}
 		}
 	}
-	
+
 	function tambah() {
 		if($this->session->userdata('token')) {
 			$data['kategori'] = $this->kategori->get_all();

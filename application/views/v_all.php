@@ -18,6 +18,10 @@
                     <h1 class="section-title">Products</h1>
                 </div> <!-- /.col-md-12 -->
             </div> <!-- /.row -->
+                <form method="GET" action="<?php echo base_url('parts/all') ?>" class = "form-inline">
+                    <input class="form-control" type="text" name="query" placeholder="Search...">
+                    <button type="submit" class="btn btn-success fa fa-search"></button>
+                </form>
             <div class="text-right">
                 <a class="btn btn-success" href="<?php echo base_url('parts/tambah') ?>">Tambah Produk Baru</a>
             </div>

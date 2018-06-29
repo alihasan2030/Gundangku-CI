@@ -3,7 +3,7 @@ class Globals
 {
     function __construct() {
         // $this->api = 'http://7fd6254b.ngrok.io/api/Parts';
-        $this->api = 'http://77289763.ngrok.io/api/Parts';
+        $this->api = 'http://localhost:5000/api/Parts';
         $this->options = array(
             CURLOPT_RETURNTRANSFER => true,   // return web page
             CURLOPT_HEADER         => false,  // don't return headers
