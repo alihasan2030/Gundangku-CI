@@ -102,7 +102,8 @@ class Parts extends CI_Controller {
 
 	function proses_hapus_barang($id_barang) {
         if($this->session->userdata('token')) {
-
+        	$this->deleteDetail($id_barang);
+            redirect(site_url());
         } else {
             redirect(site_url());
         }
@@ -202,7 +203,28 @@ class Parts extends CI_Controller {
 		$data_spesifikasi['Xid_barang'] = $this->input->post('id');
 		$data_spesifikasi['Rincian_spesifikasi'] = $this->input->post('spek');
 
+		$id = $this->input->post('id');
+
         //var_dump(json_decode($insert));
+		$this->proses_update_spesifikasi($id, $data_spesifikasi);
+	}
+
+	function proses_update_spesifikasi($id, $data_spesifikasi) {
+
+		$insert = json_encode($data_spesifikasi);
+		$curl = curl_init($this->globals->api."/UpdateSpesifikasi/".$data_spesifikasi['Xid_barang']);
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen($insert),
+			'Authorization: Bearer '. $this->session->userdata("token")
+			)
+		);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, false);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $insert);
+		$result = curl_exec($curl);
+		curl_close($curl);
+		
 		redirect(site_url());
 	}
 
