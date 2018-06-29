@@ -55,26 +55,22 @@ class Parts extends CI_Controller {
 	}
 	
 	function all() {
-		$like = $this->input->get('query');
-		if (isset($like)) {
-			if($this->session->userdata('token')) {
-				$data['barang'] =  $this->barang->get_search($like);
-				
-				$this->load->view('header');
-				$this->load->view('v_all', $data);
-			} else {
-				redirect(site_url());
-			}
-		}else{
-			if($this->session->userdata('token')) {
-				$data['barang'] =  $this->barang->get_all();
-				
-				$this->load->view('header');
-				$this->load->view('v_all', $data);
-			} else {
-				redirect(site_url());
-			}
-		}
+	    if ($this->session->userdata('token')) {
+            $like = $this->input->get('query');
+            if ($like != null) {
+                $data['barang'] =  $this->barang->get_search($like);
+
+                $this->load->view('header');
+                $this->load->view('v_all', $data);
+            }else{
+                $data['barang'] =  $this->barang->get_all();
+
+                $this->load->view('header');
+                $this->load->view('v_all', $data);
+            }
+        } else {
+	        redirect(site_url());
+        }
 	}
 
 	function tambah() {
@@ -141,10 +137,6 @@ class Parts extends CI_Controller {
 		$this->load->view('update_detail', $data);	
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	////////// DI BAWAH INI BELUM YAKIN BENER ////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	
 	function proses_insert_barang() {
 		// get form data
 		$data_barang['Id_barang'] = $this->input->post('id');

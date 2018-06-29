@@ -1,44 +1,33 @@
-<!--     <meta name="viewport" content="width=device-width">
+<div id="products" class="content-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 class="section-title">Products</h1>
+            </div> <!-- /.col-md-12 -->
+        </div> <!-- /.row -->
+        <form method="GET" action="<?php echo base_url('parts/all') ?>" class="form-inline">
+            <input class="form-control mr-2" type="text" name="query" placeholder="Cari..." required>
+            <button type="submit" class="btn btn-success"><span class="fa fa-search"></span></button>
+        </form>
+        <div class="text-right">
+            <a class="btn btn-success" href="<?php echo base_url('parts/tambah') ?>">Tambah Produk Baru</a>
+        </div>
+        <br>
+        <div class="row">
 
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet">
-
-    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.min.css') ?>">
-    <link rel="stylesheet" href="<?php echo base_url('css/normalize.min.css') ?>">
-    <link rel="stylesheet" href="<?php echo base_url('css/font-awesome.min.css') ?>">
-    <link rel="stylesheet" href="<?php echo base_url('css/animate.css') ?>">
-    <link rel="stylesheet" href="<?php echo base_url('css/templatemo_misc.css') ?>">
-    <link rel="stylesheet" href="<?php echo base_url('css/templatemo_style.css') ?>"> -->
-
- </head>
- <body background="../images/bg.png">
- <div id="products" class="content-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h1 class="section-title">Products</h1>
-                </div> <!-- /.col-md-12 -->
-            </div> <!-- /.row -->
-                <form method="GET" action="<?php echo base_url('parts/all') ?>" class = "form-inline">
-                    <input class="form-control" type="text" name="query" placeholder="Search...">
-                    <button type="submit" class="btn btn-success fa fa-search"></button>
-                </form>
-            <div class="text-right">
-                <a class="btn btn-success" href="<?php echo base_url('parts/tambah') ?>">Tambah Produk Baru</a>
-            </div>
-                <br>
-            <div class="row">
-
-                <?php foreach ($barang as $row) {?>
+            <?php foreach ($barang as $row) { ?>
                 <div class="col-md-3 col-sm-6">
                     <div class="product-item">
                         <div class="item-thumb">
                             <div class="overlay">
                                 <div class="overlay-inner">
                                     <?php $id = $row->id_barang ?>
-                                    <a href='<?php echo base_url('parts/detail_barang/').$id?>' class="view-detail">Detail</a> <!-- click ke detail -->
+                                    <a href='<?php echo base_url('parts/detail_barang/') . $id ?>' class="view-detail">Detail</a>
+                                    <!-- click ke detail -->
                                 </div>
                             </div> <!-- /.overlay -->
-                            <img style="object-fit: cover" width="230px" height="230px" src='<?php echo $row->image_barang; ?>' alt="">
+                            <img style="object-fit: cover" width="230px" height="230px"
+                                 src='<?php echo $row->image_barang; ?>' alt="">
                         </div> <!-- /.item-thumb -->
                         <h3><?php echo $row->nama_barang; ?></h3>
                         <span>Merek: <?php echo $row->merk_barang; ?></span><br>
@@ -46,9 +35,9 @@
                         <span>Stok: <?php echo $row->stok_barang; ?></span><br>
                     </div> <!-- /.product-item -->
                 </div> <!-- /.col-md-3 -->
-                <?php } ?>
-            </div> <!-- /.row -->
-        </div> <!-- /.container -->
-    </div> <!-- /#products -->
- </body>
- </html>
+            <?php } ?>
+        </div> <!-- /.row -->
+    </div> <!-- /.container -->
+</div> <!-- /#products -->
+</body>
+</html>
