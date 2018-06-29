@@ -10,6 +10,7 @@ class Parts extends CI_Controller {
 		$this->load->model('kategori');
 		$this->load->model('detailbarang');
 		$this->load->model('spesifikasi');
+		$this->load->model('logmodel');
 		$this->load->library('curl');
 		$this->load->library('session');
 		$this->load->helper('url');
@@ -71,6 +72,17 @@ class Parts extends CI_Controller {
         } else {
 	        redirect(site_url());
         }
+	}
+
+	function log() {
+	    if($this->session->userdata('token')) {
+			$data['detail'] =  $this->logmodel->getAll();
+			
+			$this->load->view('header');
+			$this->load->view('v_log', $data);
+		} else {
+			redirect(site_url());
+		}
 	}
 
 	function tambah() {

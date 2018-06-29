@@ -29,6 +29,9 @@
             <a class="nav-link" href='<?php echo base_url('parts/')?>'>Home</a>
           </li>
           <li class="nav-item active">
+            <a class="nav-link" href='<?php echo base_url('parts/log')?>'>Log</a>
+          </li>
+          <li class="nav-item active">
             <a class="nav-link" href='<?php echo base_url('parts/keluar')?>'>Logout</a>
           </li>
         </ul>
