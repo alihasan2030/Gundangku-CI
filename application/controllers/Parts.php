@@ -23,11 +23,12 @@ class Parts extends CI_Controller {
 		}
 	}
 	
-	function login() {
+	function login($hasil = null) {
 		if($this->session->userdata('token')) {
 			redirect(site_url('parts/all'));
 		} else {
-			$this->load->view('v_login');
+			$data['hasil'] = $hasil;
+			$this->load->view('v_login', $data);
 		}
 	}
 	
@@ -44,7 +45,7 @@ class Parts extends CI_Controller {
 			$this->session->set_userdata($data_session);
 			redirect(site_url('parts/all'));
 		} else {
-			redirect(site_url());
+			redirect(site_url('parts/login/gagal'));
 		}
 	}
 	
@@ -205,7 +206,27 @@ class Parts extends CI_Controller {
 		$data_spesifikasi['Xid_barang'] = $this->input->post('id');
 		$data_spesifikasi['Rincian_spesifikasi'] = $this->input->post('spek');
 
+		$id = $this->input->post('id');
+
         //var_dump(json_decode($insert));
+		$this->proses_update_spesifikasi($data_spesifikasi);
+	}
+
+	function proses_update_spesifikasi($data_spesifikasi) {
+		$insert = json_encode($data_spesifikasi);
+		$curl = curl_init($this->globals->api."/UpdateSpesifikasi/".$data_spesifikasi['Id_spesifikasi']);
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen($insert),
+			'Authorization: Bearer '. $this->session->userdata("token")
+			)
+		);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, false);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $insert);
+		$result = curl_exec($curl);
+		curl_close($curl);
+		
 		redirect(site_url());
 	}
 
@@ -214,9 +235,8 @@ class Parts extends CI_Controller {
             $this->spesifikasi->delete($id_barang);
             $this->detailbarang->delete($id_barang);
             $this->barang->delete($id_barang);
-        } else {
-            redirect(site_url());
         }
+        redirect(site_url());
     }
 
     function proses_insert_detail() {
@@ -255,99 +275,13 @@ class Parts extends CI_Controller {
 		}
 
 		sleep(3);
-		// redirect(site_url());
+		redirect(site_url());
 	}
 
-    function proses_hapus_detail($id_barang) {
+    function proses_hapus_detail($id) {
         if($this->session->userdata('token')) {
-            $this->detailbarang->delete($id_barang);
-        } else {
-            redirect(site_url());
+            $this->detailbarang->delete_by_id($id);
         }
+        redirect(site_url());
     }
-
-    function insertDetailBarang() {
-		
-		$n = $this->input->post('stok');
-		
-		for ($i = 0; $i < $n; $i++){
-			$data2['Id_detail_barang'] = 1;
-			$data2['Id_barang'] = $this->input->post('id');
-			$data2['Nomor_seri_detail'] = $this->input->post('seri_' . $i);
-			$data2['Status_detail'] = $this->input->post('status_' . $i);
-			$data2['Keterangan_detail'] = $this->input->post('ket_' . $i);
-			
-			$insert2 = json_encode($data2);
-			
-			$curl2 = curl_init($this->globals->api."/InsertDetailBarang");
-			curl_setopt($curl2, CURLOPT_CUSTOMREQUEST, "POST");
-			
-			curl_setopt($curl2, CURLOPT_HTTPHEADER, array(
-				'Content-Type: application/json',
-				'Content-Length: ' . strlen($insert2),
-				'Authorization: Bearer ' . $this->session->userdata("token")
-				)
-			);
-			
-			curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl2, CURLOPT_POSTFIELDS, $insert2);
-			
-			$result2 = curl_exec($curl2);
-			curl_close($curl2);
-		}
-		
-		redirect(base_url('parts/search'));
-		
-	}
-
-	function deleteDetail($id) {
-		$url = $this->globals->api."/DeleteDetailBarang/".$id;
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json',
-			'Authorization: Bearer '. $this->session->userdata("token")
-			)
-		);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-		$result = curl_exec($ch);
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
-
-		$this->deleteSpesifikasi($id);
-	}
-	
-	function deleteSpesifikasi($id) {
-		$url = $this->globals->api."/DeleteSpesifikasi/".$id;
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json',
-			'Authorization: Bearer '. $this->session->userdata("token")
-			)
-		);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-		$result = curl_exec($ch);
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
-		
-		$this->deleteBarang($id);
-	}
-	
-	function deleteBarang($id) {
-		$url = $this->globals->api."/DeleteBarang/".$id;
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json',
-			'Authorization: Bearer '. $this->session->userdata("token")
-			)
-		);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-		$result = curl_exec($ch);
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
-		
-		redirect(base_url('parts/all'));
-	}
 }

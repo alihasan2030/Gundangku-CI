@@ -76,4 +76,20 @@ class DetailBarang extends CI_Model
 
         return $result;
     }
+
+    function delete_by_id($id) {
+        $curl = curl_init($this->globals->api."/DeleteDetailBarangById/".$id);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Authorization: Bearer '. $this->session->userdata("token")
+            )
+        );
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($curl);
+//        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        return $result;
+    }
 }

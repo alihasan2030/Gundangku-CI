@@ -33,7 +33,7 @@
 				<a href="<?php echo base_url('parts/update_detail/').$row->id_detail_barang ?>" class="btn btn-warning">Edit</a>
 			</td>
 			<td>
-				<a href="<?php echo base_url('parts/deleteDetail/').$row->id_detail_barang ?>" class="btn btn-danger">Delete</a>
+				<a href="<?php echo base_url('parts/proses_hapus_detail/').$row->id_detail_barang ?>" class="btn btn-danger">Delete</a>
 			</td>
 		</tr>
 		</tbody>
