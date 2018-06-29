@@ -4,7 +4,7 @@ class User extends CI_Model
 {
     function check_login($username, $password) {
         // $url = 'http://7fd6254b.ngrok.io/api/auth/token';
-        $url = 'http://77289763.ngrok.io/api/auth/token';
+        $url = 'http://localhost:5000/api/auth/token';
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL,$url);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
