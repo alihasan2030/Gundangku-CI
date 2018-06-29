@@ -1,8 +1,6 @@
 <div class="container">
     <h1 class="section-title text-center">Detail Product</h1>
-    <a href="<?php echo base_url('parts/all') ?>">
-        <button class="btn btn-warning">Back</button>
-    </a>
+    <a class="btn btn-primary" href="<?php echo base_url('parts/all') ?>"><span class="fa fa-chevron-left"></span> Back</a>
     <br>
     <br>
     <div class="card">
@@ -17,7 +15,6 @@
                                  width="500px"/>
                         </div>
                     </div>
-
                 </div>
                 <div class="details col-md-6">
                     <br>
@@ -43,18 +40,22 @@
                     <br>
                     <div class="row">
                         <div class="col-md">
-                            <a class="btn btn-primary" href="<?php echo base_url('parts/update/') . $result->id_barang ?>">
+                            <a class="btn btn-primary"
+                               href="<?php echo base_url('parts/update/') . $result->id_barang ?>">
                                 Update Product
                             </a>
-                            <a class="btn btn-success" href="<?php echo base_url('parts/detail_crud/') . $result->id_barang ?>">
+                            <a class="btn btn-success"
+                               href="<?php echo base_url('parts/detail_crud/') . $result->id_barang ?>">
                                 Detail Stok
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation">
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#deleteConfirmation">
                                 Hapus Barang
                             </button>
-                            <div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationTitle" aria-hidden="true">
+                            <div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog"
+                                 aria-labelledby="deleteConfirmationTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -68,8 +69,10 @@
                                             Semua data stok dan spesifikasi tentang barang ini juga akan hilang
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                                            <a class="btn btn-danger" href="<?php echo base_url('parts/proses_hapus_barang/') . $result->id_barang ?>">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak
+                                            </button>
+                                            <a class="btn btn-danger"
+                                               href="<?php echo base_url('parts/proses_hapus_barang/') . $result->id_barang ?>">
                                                 Hapus
                                             </a>
                                         </div>
