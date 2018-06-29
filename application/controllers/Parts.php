@@ -100,18 +100,6 @@ class Parts extends CI_Controller {
 		}
 	}
 
-<<<<<<< HEAD
-=======
-	function proses_hapus_barang($id_barang) {
-        if($this->session->userdata('token')) {
-        	$this->deleteDetail($id_barang);
-            redirect(site_url());
-        } else {
-            redirect(site_url());
-        }
-    }
-
->>>>>>> 7d627de2eff15f3fe64b988e549d034fff6f1a73
 	function detail_crud($id_barang) {
 		if($this->session->userdata('token')) {
 			$data['detail'] =  $this->detailbarang->get($id_barang);
