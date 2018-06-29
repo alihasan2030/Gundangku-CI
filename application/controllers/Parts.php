@@ -201,10 +201,10 @@ class Parts extends CI_Controller {
 		$id = $this->input->post('id');
 
         //var_dump(json_decode($insert));
-		$this->proses_update_spesifikasi($data_spesifikasi);
+		$this->proses_update_spesifikasi($id,$data_spesifikasi);
 	}
 
-	function proses_update_spesifikasi($data_spesifikasi) {
+	function proses_update_spesifikasi($id,$data_spesifikasi) {
 		$insert = json_encode($data_spesifikasi);
 		$curl = curl_init($this->globals->api."/UpdateSpesifikasi/".$data_spesifikasi['Id_spesifikasi']);
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
@@ -219,7 +219,7 @@ class Parts extends CI_Controller {
 		$result = curl_exec($curl);
 		curl_close($curl);
 		
-		redirect(site_url());
+		redirect(site_url('parts/detail_barang/'.$id));
 	}
 
     function proses_hapus_barang($id_barang) {
@@ -232,6 +232,7 @@ class Parts extends CI_Controller {
     }
 
     function proses_insert_detail() {
+	    $id_barang = $this->input->post('id_product');
 		$data = [
 			'id_barang' => $this->input->post('id_product'),
 			'nomor_seri_detail' => $this->input->post('no_seri'),
@@ -246,11 +247,12 @@ class Parts extends CI_Controller {
 		}
 
 		sleep(3);
-		redirect(site_url());
+		redirect(site_url('parts/detail_crud/'.$id_barang));
 	}
 
 	function proses_update_detail() {
 		// data barang
+        $id_barang = $this->input->post('id_product');
 		$id = $this->input->post('id_detail');
 		$data = [
 			'id_detail_barang' => $id,
@@ -267,13 +269,13 @@ class Parts extends CI_Controller {
 		}
 
 		sleep(3);
-		redirect(site_url());
+        redirect(site_url('parts/detail_crud/'.$id_barang));
 	}
 
-    function proses_hapus_detail($id) {
+    function proses_hapus_detail($id, $id_barang) {
         if($this->session->userdata('token')) {
             $this->detailbarang->delete_by_id($id);
         }
-        redirect(site_url());
+        redirect(site_url('parts/detail_crud/'.$id_barang));
     }
 }
