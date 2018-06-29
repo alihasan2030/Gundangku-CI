@@ -18,11 +18,13 @@
                     <h1 class="section-title">Products</h1>
                 </div> <!-- /.col-md-12 -->
             </div> <!-- /.row -->
-            <a href="<?php echo base_url('parts/tambah') ?>"><button class="btn btn-success">Add New Product</button>
-                <br><br>
+            <div class="text-right">
+                <a class="btn btn-success" href="<?php echo base_url('parts/tambah') ?>">Tambah Produk Baru</a>
+            </div>
+                <br>
             <div class="row">
 
-                <?php foreach ($barang as $row) {?> 
+                <?php foreach ($barang as $row) {?>
                 <div class="col-md-3 col-sm-6">
                     <div class="product-item">
                         <div class="item-thumb">

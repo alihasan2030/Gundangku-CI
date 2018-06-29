@@ -37,10 +37,10 @@ class Parts extends CI_Controller {
 		
 		$result = $this->user->check_login($username, $password);
 		if ($result) {
-			$data_session = array(
-				'username' => $login,
+			$data_session = [
+				'username' => $username,
 				'token' => $result
-			);
+			];
 			$this->session->set_userdata($data_session);
 			redirect(site_url('parts/all'));
 		} else {
@@ -99,6 +99,14 @@ class Parts extends CI_Controller {
 			redirect(site_url());
 		}
 	}
+
+	function proses_hapus_barang($id_barang) {
+        if($this->session->userdata('token')) {
+
+        } else {
+            redirect(site_url());
+        }
+    }
 
 	function detail_crud($id_barang) {
 		if($this->session->userdata('token')) {
