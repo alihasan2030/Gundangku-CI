@@ -47,7 +47,7 @@
                                 Update Product
                             </a>
                             <a class="btn btn-success" href="<?php echo base_url('parts/detail_crud/') . $result->id_barang ?>">
-                                Update Stok
+                                Detail Stok
                             </a>
                         </div>
                         <div class="col-md-4">
