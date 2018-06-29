@@ -201,9 +201,8 @@ class Parts extends CI_Controller {
 	}
 
 	function proses_update_spesifikasi($id, $data_spesifikasi) {
-
 		$insert = json_encode($data_spesifikasi);
-		$curl = curl_init($this->globals->api."/UpdateSpesifikasi/".$data_spesifikasi['Xid_barang']);
+		$curl = curl_init($this->globals->api."/UpdateSpesifikasi/".$data_spesifikasi['Id_spesifikasi']);
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
 			'Content-Type: application/json',
