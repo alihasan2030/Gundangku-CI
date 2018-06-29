@@ -263,7 +263,7 @@ class Parts extends CI_Controller {
 		}
 
 		sleep(3);
-		// redirect(site_url());
+		 redirect(site_url());
 	}
 
     function proses_hapus_detail($id) {
