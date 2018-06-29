@@ -42,6 +42,10 @@
 
             <form class="form-signin" method="POST" action='<?php echo base_url('parts/proses_login')?>'>
                 <span id="reauth-email" class="reauth-email"></span>
+                <?php if ($hasil == "gagal"){ ?>
+                    <h5 class="forgot-password" style="text-align: center; color: red; font-size: 12pt;">Username/Password Salah!</h5>
+                    <br>
+                <?php } ?>
                 <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
                 <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Masuk</button>
