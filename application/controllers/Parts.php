@@ -198,7 +198,7 @@ class Parts extends CI_Controller {
 		$id = $this->input->post('id');
 
         //var_dump(json_decode($insert));
-		$this->proses_update_spesifikasi($id, $data_spesifikasi);
+		$this->proses_update_spesifikasi($data_spesifikasi);
 	}
 
 	function proses_update_spesifikasi($data_spesifikasi) {
