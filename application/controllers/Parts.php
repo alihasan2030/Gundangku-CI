@@ -100,15 +100,6 @@ class Parts extends CI_Controller {
 		}
 	}
 
-	function proses_hapus_barang($id_barang) {
-        if($this->session->userdata('token')) {
-        	$this->deleteDetail($id_barang);
-            redirect(site_url());
-        } else {
-            redirect(site_url());
-        }
-    }
-
 	function detail_crud($id_barang) {
 		if($this->session->userdata('token')) {
 			$data['detail'] =  $this->detailbarang->get($id_barang);
@@ -233,9 +224,8 @@ class Parts extends CI_Controller {
             $this->spesifikasi->delete($id_barang);
             $this->detailbarang->delete($id_barang);
             $this->barang->delete($id_barang);
-        } else {
-            redirect(site_url());
         }
+        redirect(site_url());
     }
 
     function proses_insert_detail() {
@@ -277,96 +267,10 @@ class Parts extends CI_Controller {
 		// redirect(site_url());
 	}
 
-    function proses_hapus_detail($id_barang) {
+    function proses_hapus_detail($id) {
         if($this->session->userdata('token')) {
-            $this->detailbarang->delete($id_barang);
-        } else {
-            redirect(site_url());
+            $this->detailbarang->delete_by_id($id);
         }
+        redirect(site_url());
     }
-
-    function insertDetailBarang() {
-		
-		$n = $this->input->post('stok');
-		
-		for ($i = 0; $i < $n; $i++){
-			$data2['Id_detail_barang'] = 1;
-			$data2['Id_barang'] = $this->input->post('id');
-			$data2['Nomor_seri_detail'] = $this->input->post('seri_' . $i);
-			$data2['Status_detail'] = $this->input->post('status_' . $i);
-			$data2['Keterangan_detail'] = $this->input->post('ket_' . $i);
-			
-			$insert2 = json_encode($data2);
-			
-			$curl2 = curl_init($this->globals->api."/InsertDetailBarang");
-			curl_setopt($curl2, CURLOPT_CUSTOMREQUEST, "POST");
-			
-			curl_setopt($curl2, CURLOPT_HTTPHEADER, array(
-				'Content-Type: application/json',
-				'Content-Length: ' . strlen($insert2),
-				'Authorization: Bearer ' . $this->session->userdata("token")
-				)
-			);
-			
-			curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl2, CURLOPT_POSTFIELDS, $insert2);
-			
-			$result2 = curl_exec($curl2);
-			curl_close($curl2);
-		}
-		
-		redirect(base_url('parts/search'));
-		
-	}
-
-	function deleteDetail($id) {
-		$url = $this->globals->api."/DeleteDetailBarang/".$id;
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json',
-			'Authorization: Bearer '. $this->session->userdata("token")
-			)
-		);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-		$result = curl_exec($ch);
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
-
-		$this->deleteSpesifikasi($id);
-	}
-	
-	function deleteSpesifikasi($id) {
-		$url = $this->globals->api."/DeleteSpesifikasi/".$id;
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json',
-			'Authorization: Bearer '. $this->session->userdata("token")
-			)
-		);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-		$result = curl_exec($ch);
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
-		
-		$this->deleteBarang($id);
-	}
-	
-	function deleteBarang($id) {
-		$url = $this->globals->api."/DeleteBarang/".$id;
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json',
-			'Authorization: Bearer '. $this->session->userdata("token")
-			)
-		);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-		$result = curl_exec($ch);
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
-		
-		redirect(base_url('parts/all'));
-	}
 }
